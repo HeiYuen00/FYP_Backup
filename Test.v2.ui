@@ -1,0 +1,991 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Test2</class>
+ <widget class="QMainWindow" name="Test2">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>806</width>
+    <height>720</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>12000</width>
+    <height>12000</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <property name="minimumSize">
+    <size>
+     <width>0</width>
+     <height>0</height>
+    </size>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="topMargin">
+     <number>0</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
+     <number>0</number>
+    </property>
+    <item>
+     <widget class="QScrollArea" name="scrollArea">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>100</width>
+        <height>100</height>
+       </size>
+      </property>
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
+      <property name="widgetResizable">
+       <bool>true</bool>
+      </property>
+      <widget class="QWidget" name="scrollAreaWidgetContents">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>804</width>
+         <height>696</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true"/>
+       </property>
+       <widget class="QWidget" name="layoutWidget">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>806</width>
+          <height>697</height>
+         </rect>
+        </property>
+        <layout class="QGridLayout" name="GridLayout" columnstretch="1,3">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <item row="0" column="0">
+          <widget class="QWidget" name="widget" native="true">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="layoutDirection">
+            <enum>Qt::LeftToRight</enum>
+           </property>
+           <property name="autoFillBackground">
+            <bool>false</bool>
+           </property>
+           <property name="styleSheet">
+            <string notr="true"/>
+           </property>
+           <layout class="QGridLayout" name="gridLayout_6">
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <property name="spacing">
+             <number>0</number>
+            </property>
+            <item row="0" column="0">
+             <layout class="QVBoxLayout" name="Layout_CameraMotion" stretch="0,0,2,0,2,0,0">
+              <property name="spacing">
+               <number>0</number>
+              </property>
+              <property name="sizeConstraint">
+               <enum>QLayout::SetFixedSize</enum>
+              </property>
+              <property name="leftMargin">
+               <number>0</number>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="rightMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
+               <number>0</number>
+              </property>
+              <item>
+               <layout class="QVBoxLayout" name="Layout_LightTest" stretch="2">
+                <property name="spacing">
+                 <number>6</number>
+                </property>
+                <property name="sizeConstraint">
+                 <enum>QLayout::SetFixedSize</enum>
+                </property>
+                <property name="leftMargin">
+                 <number>5</number>
+                </property>
+                <property name="topMargin">
+                 <number>5</number>
+                </property>
+                <property name="rightMargin">
+                 <number>5</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>5</number>
+                </property>
+                <item>
+                 <layout class="QVBoxLayout" name="Layout_Light" stretch="0,0">
+                  <property name="sizeConstraint">
+                   <enum>QLayout::SetDefaultConstraint</enum>
+                  </property>
+                  <item>
+                   <widget class="QCheckBox" name="Check_LC">
+                    <property name="font">
+                     <font>
+                      <pointsize>12</pointsize>
+                      <weight>75</weight>
+                      <bold>true</bold>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>Lighting</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <layout class="QGridLayout" name="gridLayout_5">
+                    <property name="spacing">
+                     <number>0</number>
+                    </property>
+                    <item row="3" column="0">
+                     <widget class="QCheckBox" name="Check_LCIO4">
+                      <property name="text">
+                       <string>GPIO4</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="2" column="0">
+                     <widget class="QCheckBox" name="Check_LCIO3">
+                      <property name="text">
+                       <string>GPIO3</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="1" column="0">
+                     <widget class="QCheckBox" name="Check_LCIO2">
+                      <property name="text">
+                       <string>GPIO2</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="0" column="0">
+                     <widget class="QCheckBox" name="Check_LCIO1">
+                      <property name="enabled">
+                       <bool>true</bool>
+                      </property>
+                      <property name="text">
+                       <string>GPIO1</string>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                 </layout>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <widget class="Line" name="line_3">
+                <property name="frameShadow">
+                 <enum>QFrame::Plain</enum>
+                </property>
+                <property name="lineWidth">
+                 <number>5</number>
+                </property>
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <layout class="QVBoxLayout" name="Layout_Camera" stretch="0,0">
+                <property name="spacing">
+                 <number>0</number>
+                </property>
+                <item>
+                 <widget class="QCheckBox" name="Check_Camera">
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>0</height>
+                   </size>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>12</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>Camera</string>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>16</width>
+                    <height>16</height>
+                   </size>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <layout class="QGridLayout" name="gridLayout_3">
+                  <property name="sizeConstraint">
+                   <enum>QLayout::SetDefaultConstraint</enum>
+                  </property>
+                  <property name="leftMargin">
+                   <number>0</number>
+                  </property>
+                  <property name="spacing">
+                   <number>0</number>
+                  </property>
+                  <item row="0" column="3">
+                   <widget class="QLabel" name="Lab_Cam_Step">
+                    <property name="maximumSize">
+                     <size>
+                      <width>16777215</width>
+                      <height>20</height>
+                     </size>
+                    </property>
+                    <property name="text">
+                     <string>Step</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="1" column="1">
+                   <widget class="QLineEdit" name="Input_Cam_ExpoStart"/>
+                  </item>
+                  <item row="1" column="0">
+                   <widget class="QLabel" name="Lab_Cam_Expo">
+                    <property name="text">
+                     <string>Expo:</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="0" column="1">
+                   <widget class="QLabel" name="Lab_Cam_Start">
+                    <property name="maximumSize">
+                     <size>
+                      <width>16777215</width>
+                      <height>20</height>
+                     </size>
+                    </property>
+                    <property name="text">
+                     <string>Start</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="1" column="2">
+                   <widget class="QLineEdit" name="Input_Cam_ExpoEnd"/>
+                  </item>
+                  <item row="2" column="0">
+                   <widget class="QLabel" name="Lab_Cam_ISO">
+                    <property name="text">
+                     <string>ISO:</string>
+                    </property>
+                    <property name="textFormat">
+                     <enum>Qt::PlainText</enum>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="0" column="2">
+                   <widget class="QLabel" name="Lab_Cam_End">
+                    <property name="maximumSize">
+                     <size>
+                      <width>16777215</width>
+                      <height>20</height>
+                     </size>
+                    </property>
+                    <property name="text">
+                     <string>End</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="2" column="2">
+                   <widget class="QLabel" name="Lab_Cam_Num">
+                    <property name="minimumSize">
+                     <size>
+                      <width>50</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="text">
+                     <string>Num:</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="1" column="3">
+                   <widget class="QLineEdit" name="Input_Cam_ExpoStep"/>
+                  </item>
+                  <item row="2" column="3">
+                   <widget class="QLineEdit" name="Input_Cam_Num"/>
+                  </item>
+                  <item row="2" column="1">
+                   <widget class="QLineEdit" name="Input_Cam_Gain"/>
+                  </item>
+                  <item row="3" column="0" colspan="2">
+                   <widget class="QCheckBox" name="Check_Cam_Save">
+                    <property name="text">
+                     <string>Save</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="3" column="2" colspan="2">
+                   <widget class="QLineEdit" name="Input_Cam_Save"/>
+                  </item>
+                 </layout>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <widget class="Line" name="line_2">
+                <property name="minimumSize">
+                 <size>
+                  <width>50</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="frameShadow">
+                 <enum>QFrame::Plain</enum>
+                </property>
+                <property name="lineWidth">
+                 <number>5</number>
+                </property>
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <layout class="QVBoxLayout" name="Layout_Motion" stretch="0,0">
+                <property name="spacing">
+                 <number>0</number>
+                </property>
+                <item>
+                 <widget class="QCheckBox" name="Check_Motion">
+                  <property name="font">
+                   <font>
+                    <pointsize>12</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="layoutDirection">
+                   <enum>Qt::LeftToRight</enum>
+                  </property>
+                  <property name="text">
+                   <string>Motion</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <layout class="QGridLayout" name="gridLayout_4" columnminimumwidth="40,0,0,0">
+                  <property name="spacing">
+                   <number>0</number>
+                  </property>
+                  <item row="3" column="1">
+                   <widget class="QLineEdit" name="Input_Motion_RotStart">
+                    <property name="styleSheet">
+                     <string notr="true"/>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="3" column="3">
+                   <widget class="QLineEdit" name="Input_Motion_RotStep"/>
+                  </item>
+                  <item row="2" column="0">
+                   <widget class="QLabel" name="Lab_Motion_Y">
+                    <property name="minimumSize">
+                     <size>
+                      <width>20</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="text">
+                     <string>     Y:</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="3" column="2">
+                   <widget class="QLineEdit" name="Input_Motion_RotEnd"/>
+                  </item>
+                  <item row="1" column="2">
+                   <widget class="QLineEdit" name="Input_Motion_XEnd"/>
+                  </item>
+                  <item row="2" column="1">
+                   <widget class="QLineEdit" name="Input_Motion_YStart"/>
+                  </item>
+                  <item row="3" column="0">
+                   <widget class="QLabel" name="Lab_Motion_Rot">
+                    <property name="minimumSize">
+                     <size>
+                      <width>25</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">Background Color: rgb(85, 170, 255)</string>
+                    </property>
+                    <property name="text">
+                     <string>Rot:</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="1" column="3">
+                   <widget class="QLineEdit" name="Input_Motion_XStep"/>
+                  </item>
+                  <item row="1" column="1">
+                   <widget class="QLineEdit" name="Input_Motion_XStart"/>
+                  </item>
+                  <item row="2" column="2">
+                   <widget class="QLineEdit" name="Input_Motion_YEnd"/>
+                  </item>
+                  <item row="2" column="3">
+                   <widget class="QLineEdit" name="Input_Motion_YStep"/>
+                  </item>
+                  <item row="1" column="0">
+                   <widget class="QLabel" name="Lab_Motion_X">
+                    <property name="minimumSize">
+                     <size>
+                      <width>20</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="text">
+                     <string>     X:</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="0" column="2">
+                   <widget class="QLabel" name="Lab_Motion_End">
+                    <property name="maximumSize">
+                     <size>
+                      <width>16777215</width>
+                      <height>20</height>
+                     </size>
+                    </property>
+                    <property name="text">
+                     <string>End</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="0" column="1">
+                   <widget class="QLabel" name="Lab_Motion_Start">
+                    <property name="maximumSize">
+                     <size>
+                      <width>16777215</width>
+                      <height>20</height>
+                     </size>
+                    </property>
+                    <property name="text">
+                     <string>Start</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="0" column="3">
+                   <widget class="QLabel" name="Lab_Motion__Step">
+                    <property name="sizeIncrement">
+                     <size>
+                      <width>0</width>
+                      <height>20</height>
+                     </size>
+                    </property>
+                    <property name="text">
+                     <string>Step</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <widget class="Line" name="line">
+                <property name="frameShadow">
+                 <enum>QFrame::Plain</enum>
+                </property>
+                <property name="lineWidth">
+                 <number>5</number>
+                </property>
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <layout class="QVBoxLayout" name="Layout_TestMode">
+                <property name="spacing">
+                 <number>0</number>
+                </property>
+                <item>
+                 <widget class="QCheckBox" name="Check_Mode">
+                  <property name="font">
+                   <font>
+                    <pointsize>12</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>Mode</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <layout class="QFormLayout" name="formLayout_4">
+                  <property name="rowWrapPolicy">
+                   <enum>QFormLayout::WrapAllRows</enum>
+                  </property>
+                  <property name="formAlignment">
+                   <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+                  </property>
+                  <property name="horizontalSpacing">
+                   <number>0</number>
+                  </property>
+                  <property name="verticalSpacing">
+                   <number>0</number>
+                  </property>
+                  <item row="0" column="0">
+                   <widget class="QCheckBox" name="Check_CollectData">
+                    <property name="minimumSize">
+                     <size>
+                      <width>50</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="text">
+                     <string>CollectData Mode</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="0" column="1">
+                   <widget class="QLineEdit" name="Input_CollectData_Path">
+                    <property name="inputMask">
+                     <string extracomment="Path"/>
+                    </property>
+                    <property name="text">
+                     <string>ImgSavePath</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+               </layout>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <layout class="QVBoxLayout" name="Layout_Img" stretch="0,0,0">
+           <property name="spacing">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="QLabel" name="Img_Display">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="styleSheet">
+              <string notr="true"/>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <layout class="QVBoxLayout" name="verticalLayout">
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QCheckBox" name="Check_MeasureData">
+               <property name="font">
+                <font>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="text">
+                <string>Measure Mode</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_5">
+               <property name="spacing">
+                <number>0</number>
+               </property>
+               <property name="bottomMargin">
+                <number>0</number>
+               </property>
+               <item>
+                <layout class="QVBoxLayout" name="verticalLayout_2">
+                 <item>
+                  <widget class="QPushButton" name="But_Measure_Ground">
+                   <property name="text">
+                    <string>Record Ground</string>
+                   </property>
+                   <property name="checkable">
+                    <bool>true</bool>
+                   </property>
+                   <property name="checked">
+                    <bool>false</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="Lab_Measure_Ground_Center">
+                   <property name="enabled">
+                    <bool>true</bool>
+                   </property>
+                   <property name="font">
+                    <font>
+                     <weight>75</weight>
+                     <bold>true</bold>
+                    </font>
+                   </property>
+                   <property name="text">
+                    <string>Ground Center</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="Lab_Measure_Ground_LU">
+                   <property name="text">
+                    <string>Left Upper</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="Lab_Measure_Ground_LL">
+                   <property name="text">
+                    <string>Left Lower</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="Lab_Measure_Ground_RU">
+                   <property name="text">
+                    <string>Right Upper</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="Lab_Measure_Ground_RL">
+                   <property name="text">
+                    <string>Right Lower</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item>
+                <layout class="QVBoxLayout" name="verticalLayout_4">
+                 <item>
+                  <widget class="QPushButton" name="But_Measure_Moved">
+                   <property name="text">
+                    <string>Record Moved Center</string>
+                   </property>
+                   <property name="checkable">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="Lab_Measure_Moved_Center">
+                   <property name="font">
+                    <font>
+                     <weight>75</weight>
+                     <bold>true</bold>
+                    </font>
+                   </property>
+                   <property name="text">
+                    <string>Measured Center</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="Lab_Measure_Moved_LU">
+                   <property name="text">
+                    <string>Left Upper</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="Lab_Measure_Moved_LL">
+                   <property name="text">
+                    <string>Left Lower</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="Lab_Measure_Moved_RU">
+                   <property name="text">
+                    <string>Right Upper</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="Lab_Measure_Moved_RL">
+                   <property name="text">
+                    <string>Right Lower</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item>
+                <layout class="QVBoxLayout" name="verticalLayout_3">
+                 <item>
+                  <widget class="QPushButton" name="But_Measure_Compensation">
+                   <property name="text">
+                    <string>Compensation</string>
+                   </property>
+                   <property name="checkable">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="Lab_Measure_CompensatedCen">
+                   <property name="font">
+                    <font>
+                     <weight>75</weight>
+                     <bold>true</bold>
+                    </font>
+                   </property>
+                   <property name="text">
+                    <string>Compensated Center</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="Lab_Measure_compensated_LU">
+                   <property name="text">
+                    <string>Left Upper</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="Lab_Measure_compensated_LL">
+                   <property name="text">
+                    <string>Left Lower</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="Lab_Measure_compensated_RU">
+                   <property name="text">
+                    <string>Right Upper </string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="Lab_Measure_compensated_RL">
+                   <property name="text">
+                    <string>Right Lower</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_2">
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QPushButton" name="But_Start">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>50</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>Start</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="But_Stop">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>50</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>Stop</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="But_Reset">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>50</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>Reset</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>806</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuMain">
+    <property name="title">
+     <string>Main</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="menuLogging">
+    <property name="title">
+     <string>Logging</string>
+    </property>
+   </widget>
+   <addaction name="menuMain"/>
+   <addaction name="menuLogging"/>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

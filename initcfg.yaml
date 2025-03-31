@@ -1,0 +1,22 @@
+#Camera
+Expo_Start: 1
+Expo_End: 1
+Expo_Step: 1
+Gain: 1
+Num: 1
+Savepath: Image
+
+
+#Motion
+X_Start: 0
+X_End: 0
+X_Step: 0
+Y_Start: 0
+Y_End: 0
+Y_Step: 0
+Rot_Start: 0
+Rot_End: 0
+Rot_Step: 0
+
+
+
