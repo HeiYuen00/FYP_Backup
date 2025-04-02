@@ -50,6 +50,7 @@ Motion_Buffer ="e0"
 
 Array_GroundCorners = 0
 Array_MovedCorners = 0
+Array_MovedCorners_afterangle = 0
 Array_CompensatedCorners = 0
 Array_Center = [[0,0],[0,0],[0,0],[0,0]]
 
@@ -410,7 +411,7 @@ class Ui(QtWidgets.QMainWindow):
             self.Lab_Measure_Moved_LL.setText(str(Array_MovedCorners[1][0])+","+str(Array_MovedCorners[1][1]))     
             self.Lab_Measure_Moved_RU.setText(str(Array_MovedCorners[2][0])+","+str(Array_MovedCorners[2][1])) 
             self.Lab_Measure_Moved_RL.setText(str(Array_MovedCorners[3][0])+","+str(Array_MovedCorners[3][1]))  
-        elif (MeasureModeStatus == 3):
+        elif (MeasureModeStatus == 4):# 3 is used in the angle compensated img before XY
             self.Lab_Measure_CompensatedCen.setText(str(Array_Center[2][0])+","+str(Array_Center[2][1])) 
             self.Lab_Measure_compensated_LU.setText(str(Array_CompensatedCorners[0][0])+","+str(Array_CompensatedCorners[0][1])) 
             self.Lab_Measure_compensated_LL.setText(str(Array_CompensatedCorners[1][0])+","+str(Array_CompensatedCorners[1][1]))     
@@ -466,6 +467,8 @@ class jobthread(QThread):
         elif (mode == 2):
             ImgPath = os.path.join(current_dir,"MeasureMode","MeasureMoved.jpg")
         elif (mode == 3):
+            ImgPath = os.path.join(current_dir,"MeasureMode","MeasureCompensated_Angle.jpg")   
+        elif (mode == 4):
             ImgPath = os.path.join(current_dir,"MeasureMode","MeasureCompensated.jpg")    
 
         img.save(f"%s"%ImgPath)
@@ -487,6 +490,7 @@ class jobthread(QThread):
         global Array_GroundCorners 
         global Array_MovedCorners
         global Array_CompensatedCorners 
+        global Array_MovedCorners_afterangle
         global Array_Center 
         global Motion_Buffer
         MeasureModeStatus = 0
@@ -503,36 +507,33 @@ class jobthread(QThread):
             print(Array_GroundCorners)
             Array_Center[0][0] =centroid[0]
             Array_Center[0][1] = centroid[1]
-
-            
-
-
         
         elif (Test_handle["MeasureMoved"] is True):
             MeasureModeStatus = 2
-            Motion_Buffer = "x" + str(Test_handle['X_Start'] - X_global)
-            Motion_Request.set()
-            Motion_Done_Signal.wait()
-            Motion_Done_Signal.clear()
-            X_global = Test_handle['X_Start']
-            Logging_Buffer = "Moving X to  = %s"%X_global
-            event.set()
-            
-            Motion_Buffer = "y" + str(Test_handle['Y_Start'] - Y_global)
-            Motion_Request.set()
-            Motion_Done_Signal.wait()
-            Motion_Done_Signal.clear()
-            Y_global = Test_handle['Y_Start']
-            Logging_Buffer = "Moving Y to  = %s"%Y_global
-            event.set()
-            
-            Motion_Buffer = "a" + str(Test_handle["Rot_Start"])
-            Angle_global = Test_handle["Rot_Start"]
-            Logging_Buffer = "Moving Y to  = %s"%Angle_global
-            event.set()
-            Motion_Request.set()
-            Motion_Done_Signal.wait()
-            Motion_Done_Signal.clear()
+            if (Test_handle['X_Start'] != 0.0 or Test_handle['Y_Start'] != 0.0 or Test_handle['Rot_Start'] != 0.0):
+                Motion_Buffer = "x" + str(Test_handle['X_Start'] - X_global)
+                Motion_Request.set()
+                Motion_Done_Signal.wait()
+                Motion_Done_Signal.clear()
+                X_global = Test_handle['X_Start']
+                Logging_Buffer = "Moving X to  = %s"%X_global
+                event.set()
+                
+                Motion_Buffer = "y" + str(Test_handle['Y_Start'] - Y_global)
+                Motion_Request.set()
+                Motion_Done_Signal.wait()
+                Motion_Done_Signal.clear()
+                Y_global = Test_handle['Y_Start']
+                Logging_Buffer = "Moving Y to  = %s"%Y_global
+                event.set()
+                
+                Motion_Buffer = "a" + str(Test_handle["Rot_Start"])
+                Angle_global = Test_handle["Rot_Start"]
+                Logging_Buffer = "Moving Y to  = %s"%Angle_global
+                event.set()
+                Motion_Request.set()
+                Motion_Done_Signal.wait()
+                Motion_Done_Signal.clear()
             MC.ModifyCamConfig("ExposureTime",Test_handle["Expo_Start"])
             image = MC.GrabImg()
             imgpath = self.SaveMeasureModeImg(image,MeasureModeStatus)
@@ -549,6 +550,7 @@ class jobthread(QThread):
         else: #MeasureGroundCompensated is Ture
             MeasureModeStatus = 3
             Translation,Angle_move  = LibAlg.robust_transform(Array_GroundCorners,Array_MovedCorners)
+            print("Angle compensated")
             print (Translation,Angle_move)
             Angle_new = Angle_global - Angle_move #TODO determine the + or - the relative angle
             Motion_Buffer = "a" + str(Angle_new)
@@ -559,6 +561,27 @@ class jobthread(QThread):
             Logging_Buffer = "Moving A to  = %s"%Angle_global
             event.set()
 
+            #######################################
+            #Add in 20250402, grab and pass to alg again after adjust angle to perform XY shift
+            
+            MC.ModifyCamConfig("ExposureTime",Test_handle["Expo_Start"])
+            image = MC.GrabImg()
+            imgpath = self.SaveMeasureModeImg(image,MeasureModeStatus)
+            self.jobthread_image_signal.emit(image)
+            
+            result = CLIENT.infer(imgpath, model_id="pcbholedetectionv3/4")
+            
+            result_unsorted_corner = LibAlg.filiter_Result(result)
+            centroid,Array_MovedCorners_afterangle = LibAlg.sort_points_anticlockwise(result_unsorted_corner)
+            Array_Center[3][0] =centroid[0]
+            Array_Center[3][1] = centroid[1]
+
+            Translation,Angle_move  = LibAlg.robust_transform(Array_GroundCorners,Array_MovedCorners_afterangle)
+            print("XY compensated")
+            print (Translation,Angle_move)
+
+            #######################################
+            MeasureModeStatus = 4
             Motion_Buffer = "x" + str(Translation[0])
             Motion_Request.set()
             Motion_Done_Signal.wait()
