@@ -1,5 +1,7 @@
 import numpy as np
-from sklearn.linear_model import RANSACRegressor
+# from sklearn.linear_model import RANSACRegressor
+from scipy.optimize import minimize
+from math import *
 
 def compute_rigid_transform(original, moved):
     """
@@ -27,28 +29,44 @@ def compute_rigid_transform(original, moved):
     orig_centered = original - centroid_orig
     moved_centered = moved - centroid_moved
     
-    # Compute covariance matrix H
-    H = orig_centered.T @ moved_centered
+    # # Compute covariance matrix H
+    # H = orig_centered.T @ moved_centered
     
-    # Singular Value Decomposition
-    U, _, Vt = np.linalg.svd(H)
+    # # Singular Value Decomposition
+    # U, _, Vt = np.linalg.svd(H)
     
-    # Compute rotation matrix
-    R = Vt.T @ U.T
+    # # Compute rotation matrix
+    # R = Vt.T @ U.T
     
-    # Handle reflection case
-    if np.linalg.det(R) < 0:
-        Vt[-1, :] *= -1
-        R = Vt.T @ U.T
+    # # Handle reflection case
+    # if np.linalg.det(R) < 0:
+    #     Vt[-1, :] *= -1
+    #     R = Vt.T @ U.T
     
-    # Extract rotation angle
-    angle_rad = np.arctan2(R[1, 0], R[0, 0])
-    angle_deg = np.degrees(angle_rad)
+    # # Extract rotation angle
+    # angle_rad = np.arctan2(R[1, 0], R[0, 0])
+    # angle_deg = np.degrees(angle_rad)
+
+    # Step 3: Compute rotation matrix R using SVD
+
+    x = orig_centered
+    y = moved_centered
+
+    ss = 0
+    sc = 0
+    for i in range(len(original)):
+        ss += y[i, 1] * x[i, 0] - y[i, 0] * x[i, 1]
+        sc += y[i, 0] * x[i, 0] + y[i, 1] * x[i, 1]
+    norm_v = sqrt(ss * ss + sc * sc)
+    s = ss / norm_v
+    c = sc / norm_v
+    alpha = atan2(s, c)
+    angle_shift = alpha * 180 / pi
     
     # Compute translation
     translation = centroid_moved - centroid_orig
     
-    return translation, angle_deg
+    return translation, angle_shift
 
 def rearrange_coordinates(positions):
     # Convert to a NumPy array if not already
@@ -76,7 +94,6 @@ def enforce_rectangle(points, angle_tol=5):
     points = points[sorted_indices]
     
     # Enforce right angles using optimization
-    from scipy.optimize import minimize
     def loss(adjusted_points):
         adjusted_points = adjusted_points.reshape(4, 2)
         # Penalize deviations from detected positions
@@ -94,23 +111,23 @@ def enforce_rectangle(points, angle_tol=5):
     return result.x.reshape(4, 2)
 
 
-def adaptive_ransac(original, moved, noise_scale=5.0):
-    # Estimate inlier threshold based on expected noise
-    residual_threshold = 2.0 * noise_scale  # 2σ coverage for Gaussian noise
+# def adaptive_ransac(original, moved, noise_scale=5.0):
+#     # Estimate inlier threshold based on expected noise
+#     residual_threshold = 2.0 * noise_scale  # 2σ coverage for Gaussian noise
     
-    model = RANSACRegressor(
-        min_samples=3,  # More robust than 2-point samples
-        max_trials=500,  # Increased sampling
-        residual_threshold=residual_threshold,
-        random_state=42
-    )
-    model.fit(original, moved)
+#     model = RANSACRegressor(
+#         min_samples=3,  # More robust than 2-point samples
+#         max_trials=500,  # Increased sampling
+#         residual_threshold=residual_threshold,
+#         random_state=42
+#     )
+#     model.fit(original, moved)
     
-    if sum(model.inlier_mask_) < 3:  # Fallback to all points
-        return compute_rigid_transform(original, moved)
+#     if sum(model.inlier_mask_) < 3:  # Fallback to all points
+#         return compute_rigid_transform(original, moved)
     
-    return compute_rigid_transform(original[model.inlier_mask_], 
-                                 moved[model.inlier_mask_])
+#     return compute_rigid_transform(original[model.inlier_mask_], 
+#                                  moved[model.inlier_mask_])
 
 
 def sort_points_anticlockwise(points):
@@ -129,7 +146,7 @@ def robust_transform(original, moved):
     moved_rect = enforce_rectangle(moved)
     
     # Step 3: Apply RANSAC to reject outliers
-    translation, angle = adaptive_ransac(original_rect, moved_rect)
+    translation, angle = compute_rigid_transform(original_rect, moved_rect)
     translation = translation*(5/47)
     translation = np.round(translation,1)
     angle = round(angle,1)
