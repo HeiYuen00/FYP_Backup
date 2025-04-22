@@ -456,7 +456,7 @@ class jobthread(QThread):
             ImgName = str(CollectModeSetting[2][0]) + "_" + name + ".jpg"
             ImgPath = os.path.join(current_dir,Test_handle["Collectpath"], ImgName)    
         else:
-            ImgName = str(Expo) + "_" + str(Test_handle["NumGrab"]) + "_" + name + ".jpg"
+            ImgName = str(Expo) +  "_" + name + ".jpg"
             ImgPath = os.path.join(current_dir,Test_handle["SavePath"], ImgName)
         img.save(f"%s"%ImgPath)  
 
@@ -676,7 +676,7 @@ class jobthread(QThread):
 
             image = MC.GrabImg()
             self.jobthread_image_signal.emit(image)
-            self.SaveImg(Test_handle,image, (str(position[0]) + "_" + str(position[1]) + "_" + str(position[2])))
+            self.SaveImg(Test_handle,image, (str(position[0]) + "_" + str(position[1]) + "_" + str(position[2])+ "_" + str(n)))
 
     def NormalMode(self, Test_handle):
         global X_global 
@@ -705,7 +705,7 @@ class jobthread(QThread):
 
                         self.jobthread_image_signal.emit(image)
                         if(Test_handle["Save"] is True):
-                            self.SaveImg(Test_handle,image,str(0))
+                            self.SaveImg(Test_handle,image,str(Num))
                     Expo = Expo + Test_handle["Expo_Step"]
         
         elif ((Test_handle["Motion"] is True)  & (Test_handle["Camera"] is True)):
