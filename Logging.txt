@@ -12149,3 +12149,47 @@
 1745328137.8714478 Grab Image, Expo = 0.1
 1745328138.1873462 Test Finished
 1745329709.706998 Closing Application
+1745336154.1109338 Start Application
+1745336161.168584 Closing Application
+1745336352.2616827 Start Application
+1745336362.059709 Start Test, Mode = 3
+1745336363.876318 Grab Image, Expo = 0.1
+1745336364.153182 Test Finished
+1745336373.2216704 Closing Application
+1745336752.720615 Start Application
+1745336761.923784 Start Test, Mode = 3
+1745336763.7471251 Grab Image, Expo = 0.1
+1745336764.0237007 Test Finished
+1745336788.207112 Closing Application
+1745336893.7263105 Start Application
+1745336904.1140988 Start Test, Mode = 3
+1745336905.9211223 Grab Image, Expo = 0.1
+1745336906.196997 Test Finished
+1745336913.9444764 Closing Application
+1745337083.5464108 Start Application
+1745337093.1277704 Start Test, Mode = 3
+1745337094.935652 Grab Image, Expo = 0.1
+1745337095.2626889 Test Finished
+1745337986.457523 Closing Application
+1745338074.6887035 Start Application
+1745338080.6199093 Closing Application
+1745338766.0338864 Start Application
+1745338967.9050672 Closing Application
+1745338982.657711 Start Application
+1745339005.0289187 Closing Application
+1745339152.5764198 Start Application
+1745339183.7307682 Closing Application
+1745339234.6196227 Start Application
+1745339244.1026177 Closing Application
+1745858835.262796 Start Application
+1745858854.0466495 Closing Application
+1745859011.2215028 Start Application
+1745859028.4721506 Closing Application
+1745859049.2245471 Start Application
+1745859058.167788 Closing Application
+1745860558.4395716 Start Application
+1745860568.6233032 Closing Application
+1745860586.6519496 Start Application
+1745860687.0220919 Closing Application
+1745861105.4541557 Start Application
+1745861145.938559 Closing Application

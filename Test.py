@@ -59,7 +59,7 @@ Rotation_pt = np.array([0,0])
 class Ui(QtWidgets.QMainWindow):
     def __init__(self):
         super(Ui, self).__init__()
-        uic.loadUi('Test.v2.ui', self)
+        uic.loadUi('Test.v4.ui', self)
         #from ultralytics import YOLO
         #global Model
         #Model = YOLO(f'March7_Confid80.pt')
@@ -389,14 +389,19 @@ class Ui(QtWidgets.QMainWindow):
         return job
     
     #@pyqtSlot(QImage)
-    def displayimg(self,image):
+    def displayimg(self,image,frame):
         height, width, channel = image.shape
         image_addLine = image.copy()
         image_addLine[640,:] = 255
         image_addLine[:,640] = 255  
         QTimage = QtGui.QImage(image_addLine, width,height,3*width, QtGui.QImage.Format_RGB888 )
-        self.Img_Display.setPixmap(QtGui.QPixmap(QTimage).scaled(self.Img_Display.size(), QtCore.Qt.KeepAspectRatio, QtCore.Qt.SmoothTransformation))
-
+        if(frame == 1):
+            self.Img_Display.setPixmap(QtGui.QPixmap(QTimage).scaled(self.Img_Display.size(), QtCore.Qt.KeepAspectRatio, QtCore.Qt.SmoothTransformation))
+        elif(frame ==2):
+            self.Img_Display1.setPixmap(QtGui.QPixmap(QTimage).scaled(self.Img_Display1.size(), QtCore.Qt.KeepAspectRatio, QtCore.Qt.SmoothTransformation))
+        elif(frame ==3):
+            self.Img_Display2.setPixmap(QtGui.QPixmap(QTimage).scaled(self.Img_Display2.size(), QtCore.Qt.KeepAspectRatio, QtCore.Qt.SmoothTransformation))
+    
     #@pyqtSlot(MeasureModeStatus)
     def UpdateMeasureUIText(self, MeasureModeStatus):   
         print("Test UpdateText")
@@ -437,7 +442,7 @@ class logging(QThread):
 
 ############################################################################################################################################################
 class jobthread(QThread):
-    jobthread_image_signal = pyqtSignal(np.ndarray)
+    jobthread_image_signal = pyqtSignal(np.ndarray, int)
     update_measuremode_UItext_signal = pyqtSignal(int)
     def run(self):
         match Mode:
@@ -504,7 +509,7 @@ class jobthread(QThread):
             MC.ModifyCamConfig("ExposureTime",Test_handle["Expo_Start"])
             image = MC.GrabImg()
             imgpath = self.SaveMeasureModeImg(image,MeasureModeStatus)
-            self.jobthread_image_signal.emit(image)
+            self.jobthread_image_signal.emit(image,0)
             result = CLIENT.infer(imgpath, model_id="pcbholedetectionv3/4")
             result_unsorted_corner = LibAlgv2.filiter_Result(result)
             centroid,Array_GroundCorners = LibAlgv2.sort_points_anticlockwise(result_unsorted_corner)
@@ -524,9 +529,9 @@ class jobthread(QThread):
             MeasureModeStatus = 11 #For cal ref rotation pt
             image = MC.GrabImg()
             imgpath = self.SaveMeasureModeImg(image,MeasureModeStatus)
-            self.jobthread_image_signal.emit(image)
+            self.jobthread_image_signal.emit(image,0)
             mgpath = self.SaveMeasureModeImg(image,MeasureModeStatus)
-            self.jobthread_image_signal.emit(image)
+            self.jobthread_image_signal.emit(image,1)
             result = CLIENT.infer(imgpath, model_id="pcbholedetectionv3/4")
             result_unsorted_corner = LibAlgv2.filiter_Result(result)
             centroid,Array_RefrotationCorners = LibAlgv2.sort_points_anticlockwise(result_unsorted_corner)
@@ -571,7 +576,7 @@ class jobthread(QThread):
             MC.ModifyCamConfig("ExposureTime",Test_handle["Expo_Start"])
             image = MC.GrabImg()
             imgpath = self.SaveMeasureModeImg(image,MeasureModeStatus)
-            self.jobthread_image_signal.emit(image)
+            self.jobthread_image_signal.emit(image,2)
             
             result = CLIENT.infer(imgpath, model_id="pcbholedetectionv3/4")
             
@@ -615,7 +620,7 @@ class jobthread(QThread):
             MC.ModifyCamConfig("ExposureTime",Test_handle["Expo_Start"])
             image = MC.GrabImg()
             imgpath = self.SaveMeasureModeImg(image,MeasureModeStatus)
-            self.jobthread_image_signal.emit(image)
+            self.jobthread_image_signal.emit(image,3)
             result = CLIENT.infer(imgpath, model_id="pcbholedetectionv3/4")
 
             result_unsorted_corner = LibAlgv2.filiter_Result(result)
@@ -675,7 +680,7 @@ class jobthread(QThread):
             event.set()
 
             image = MC.GrabImg()
-            self.jobthread_image_signal.emit(image)
+            self.jobthread_image_signal.emit(image,1)
             self.SaveImg(Test_handle,image, (str(position[0]) + "_" + str(position[1]) + "_" + str(position[2])+ "_" + str(n)))
 
     def NormalMode(self, Test_handle):
@@ -703,7 +708,7 @@ class jobthread(QThread):
                         event.set()
                         image = MC.GrabImg()
 
-                        self.jobthread_image_signal.emit(image)
+                        self.jobthread_image_signal.emit(image,1)
                         if(Test_handle["Save"] is True):
                             self.SaveImg(Test_handle,image,str(Num))
                     Expo = Expo + Test_handle["Expo_Step"]
@@ -766,7 +771,7 @@ class jobthread(QThread):
                                 Logging_Buffer = "Grab Image, Expo = %s"%Expo
                                 event.set()
                                 image = MC.GrabImg()
-                                self.jobthread_image_signal.emit(image)
+                                self.jobthread_image_signal.emit(image,1)
                                 if(Test_handle["Save"] is True):
                                     self.SaveImg(Test_handle,image, (str(X_Loc)+"_"+str(Y_Loc)+"_"+str(Angle)))
                                 Expo = Expo + Test_handle["Expo_Step"]

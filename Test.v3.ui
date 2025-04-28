@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1241</width>
+    <width>1632</width>
     <height>720</height>
    </rect>
   </property>
@@ -70,7 +70,7 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>1239</width>
+         <width>1630</width>
          <height>697</height>
         </rect>
        </property>
@@ -82,7 +82,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>1151</width>
+          <width>1721</width>
           <height>697</height>
          </rect>
         </property>
@@ -657,7 +657,7 @@
           </widget>
          </item>
          <item row="0" column="1">
-          <layout class="QVBoxLayout" name="Layout_Img" stretch="0,0,0">
+          <layout class="QVBoxLayout" name="Layout_Img" stretch="5,1,0">
            <property name="spacing">
             <number>0</number>
            </property>
@@ -676,7 +676,7 @@
                </property>
                <property name="minimumSize">
                 <size>
-                 <width>320</width>
+                 <width>480</width>
                  <height>0</height>
                 </size>
                </property>
@@ -695,32 +695,38 @@
               <widget class="QLabel" name="Img_Display1">
                <property name="minimumSize">
                 <size>
-                 <width>320</width>
+                 <width>480</width>
                  <height>0</height>
                 </size>
                </property>
                <property name="text">
-                <string>TextLabel</string>
+                <string/>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QLabel" name="label_2">
+              <widget class="QLabel" name="Img_Display2">
                <property name="minimumSize">
                 <size>
-                 <width>320</width>
+                 <width>480</width>
                  <height>0</height>
                 </size>
                </property>
+               <property name="frameShadow">
+                <enum>QFrame::Sunken</enum>
+               </property>
+               <property name="lineWidth">
+                <number>0</number>
+               </property>
                <property name="text">
-                <string>TextLabel</string>
+                <string/>
                </property>
               </widget>
              </item>
             </layout>
            </item>
            <item>
-            <layout class="QVBoxLayout" name="verticalLayout">
+            <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0">
              <property name="topMargin">
               <number>0</number>
              </property>
@@ -741,15 +747,150 @@
               </widget>
              </item>
              <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_5">
+              <layout class="QHBoxLayout" name="horizontalLayout_5" stretch="2,3,3,3">
                <property name="spacing">
                 <number>0</number>
+               </property>
+               <property name="sizeConstraint">
+                <enum>QLayout::SetDefaultConstraint</enum>
                </property>
                <property name="bottomMargin">
                 <number>0</number>
                </property>
                <item>
-                <layout class="QVBoxLayout" name="verticalLayout_2">
+                <layout class="QVBoxLayout" name="verticalLayout_7" stretch="1,4">
+                 <property name="spacing">
+                  <number>0</number>
+                 </property>
+                 <property name="sizeConstraint">
+                  <enum>QLayout::SetDefaultConstraint</enum>
+                 </property>
+                 <item>
+                  <widget class="QLabel" name="label_7">
+                   <property name="layoutDirection">
+                    <enum>Qt::RightToLeft</enum>
+                   </property>
+                   <property name="frameShape">
+                    <enum>QFrame::Box</enum>
+                   </property>
+                   <property name="frameShadow">
+                    <enum>QFrame::Plain</enum>
+                   </property>
+                   <property name="text">
+                    <string>Difference between Ground and Compensated</string>
+                   </property>
+                   <property name="textFormat">
+                    <enum>Qt::MarkdownText</enum>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <layout class="QGridLayout" name="gridLayout">
+                   <item row="0" column="1">
+                    <widget class="QLabel" name="label_2">
+                     <property name="frameShape">
+                      <enum>QFrame::Box</enum>
+                     </property>
+                     <property name="frameShadow">
+                      <enum>QFrame::Raised</enum>
+                     </property>
+                     <property name="text">
+                      <string/>
+                     </property>
+                     <property name="alignment">
+                      <set>Qt::AlignCenter</set>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="1" column="0">
+                    <widget class="QLabel" name="label_3">
+                     <property name="frameShape">
+                      <enum>QFrame::Box</enum>
+                     </property>
+                     <property name="frameShadow">
+                      <enum>QFrame::Raised</enum>
+                     </property>
+                     <property name="text">
+                      <string>Y(mm)</string>
+                     </property>
+                     <property name="alignment">
+                      <set>Qt::AlignCenter</set>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="0" column="0">
+                    <widget class="QLabel" name="label">
+                     <property name="frameShape">
+                      <enum>QFrame::Box</enum>
+                     </property>
+                     <property name="frameShadow">
+                      <enum>QFrame::Raised</enum>
+                     </property>
+                     <property name="text">
+                      <string>X(mm)</string>
+                     </property>
+                     <property name="alignment">
+                      <set>Qt::AlignCenter</set>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="2" column="0">
+                    <widget class="QLabel" name="label_4">
+                     <property name="frameShape">
+                      <enum>QFrame::Box</enum>
+                     </property>
+                     <property name="frameShadow">
+                      <enum>QFrame::Raised</enum>
+                     </property>
+                     <property name="text">
+                      <string>Angle(deg)</string>
+                     </property>
+                     <property name="alignment">
+                      <set>Qt::AlignCenter</set>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="2" column="1">
+                    <widget class="QLabel" name="label_5">
+                     <property name="frameShape">
+                      <enum>QFrame::Box</enum>
+                     </property>
+                     <property name="frameShadow">
+                      <enum>QFrame::Raised</enum>
+                     </property>
+                     <property name="text">
+                      <string/>
+                     </property>
+                     <property name="alignment">
+                      <set>Qt::AlignCenter</set>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="1" column="1">
+                    <widget class="QLabel" name="label_6">
+                     <property name="frameShape">
+                      <enum>QFrame::Box</enum>
+                     </property>
+                     <property name="frameShadow">
+                      <enum>QFrame::Raised</enum>
+                     </property>
+                     <property name="text">
+                      <string/>
+                     </property>
+                     <property name="alignment">
+                      <set>Qt::AlignCenter</set>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                </layout>
+               </item>
+               <item>
+                <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0,0,0,0,0,0">
                  <item>
                   <widget class="QPushButton" name="But_Measure_Ground">
                    <property name="text">
@@ -813,7 +954,7 @@
                 </layout>
                </item>
                <item>
-                <layout class="QVBoxLayout" name="verticalLayout_4">
+                <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,0,0,0,0,0">
                  <item>
                   <widget class="QPushButton" name="But_Measure_Moved">
                    <property name="text">
@@ -1004,7 +1145,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1241</width>
+     <width>1632</width>
      <height>21</height>
     </rect>
    </property>
