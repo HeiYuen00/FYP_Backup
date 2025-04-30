@@ -32,7 +32,8 @@ job = {
             "MeasureMode": False,
             "MeasureGround": False,
             "MeasureMoved": False,
-            "MeasureGroundCompensated": False
+            "MeasureGroundCompensated": False,
+            "Check_RotationCenter": False
             }
 
 
@@ -54,6 +55,10 @@ Array_MovedCorners_afterangle = 0
 Array_CompensatedCorners = 0
 Array_Center = [[0,0],[0,0],[0,0],[0,0]]
 Rotation_pt = np.array([0,0])
+Translation = np.array([0,0])
+Angle_move = 0
+Array_Corner_diff = np.array([[0.0,0.0],[0.0,0.0],[0.0,0.0],[0.0,0.0]])
+Array_RefrotationCorners = np.array([0,0])
 
 ############################################################################################################################################################
 class Ui(QtWidgets.QMainWindow):
@@ -120,7 +125,7 @@ class Ui(QtWidgets.QMainWindow):
         self.Input_Motion_RotStart.setText(str(cfg['Rot_Start']))
         self.Input_Motion_RotEnd.setText(str(cfg['Rot_End']))
         self.Input_Motion_RotStep.setText(str(cfg['Rot_Step']))       
-        self.Input_CollectData_Path.setText("Collect Train Data cfg")
+        self.Input_CollectData_Path.setText("SavePath")
 
         #self.Lab_Display_X.setText("0")
         #self.Lab_Display_Y.setText("0")
@@ -382,6 +387,7 @@ class Ui(QtWidgets.QMainWindow):
                 job['MeasureGround'] = self.But_Measure_Ground.isChecked()
                 job['MeasureMoved'] = self.But_Measure_Moved.isChecked()
                 job['MeasureGroundCompensated'] = self.But_Measure_Compensation.isChecked()
+                job['Check_RotationCenter'] = self.Check_RotationCenter.isChecked()
         else: 
             job['CollectMode'] = False
             job['MeasureMode'] = False
@@ -405,7 +411,10 @@ class Ui(QtWidgets.QMainWindow):
     #@pyqtSlot(MeasureModeStatus)
     def UpdateMeasureUIText(self, MeasureModeStatus):   
         print("Test UpdateText")
-        if (MeasureModeStatus == 11):
+        if (MeasureModeStatus == 1 or MeasureModeStatus == 11):
+            if(MeasureModeStatus == 11):
+                self.Display_X_rotationCenter.setText(str(Array_RefrotationCorners[0]))
+                self.Display_Y_rotationCenter.setText(str(Array_RefrotationCorners[1]))
             self.Lab_Measure_Ground_Center.setText(str(Array_Center[0][0])+","+str(Array_Center[0][1])) 
             self.Lab_Measure_Ground_LU.setText(str(Array_GroundCorners[0][0])+","+str(Array_GroundCorners[0][1])) 
             self.Lab_Measure_Ground_LL.setText(str(Array_GroundCorners[1][0])+","+str(Array_GroundCorners[1][1]))     
@@ -417,12 +426,22 @@ class Ui(QtWidgets.QMainWindow):
             self.Lab_Measure_Moved_LL.setText(str(Array_MovedCorners[1][0])+","+str(Array_MovedCorners[1][1]))     
             self.Lab_Measure_Moved_RU.setText(str(Array_MovedCorners[2][0])+","+str(Array_MovedCorners[2][1])) 
             self.Lab_Measure_Moved_RL.setText(str(Array_MovedCorners[3][0])+","+str(Array_MovedCorners[3][1]))  
+        elif (MeasureModeStatus == 3):
+            self.Display_X_compensation.setText(str(Translation[0]))
+            self.Display_Y_compensation.setText(str(Translation[1]))
+            self.Display_Angle_compensation.setText(str(Angle_move))
+
         elif (MeasureModeStatus == 4):# 3 is used in the angle compensated img before XY
             self.Lab_Measure_CompensatedCen.setText(str(Array_Center[2][0])+","+str(Array_Center[2][1])) 
             self.Lab_Measure_compensated_LU.setText(str(Array_CompensatedCorners[0][0])+","+str(Array_CompensatedCorners[0][1])) 
             self.Lab_Measure_compensated_LL.setText(str(Array_CompensatedCorners[1][0])+","+str(Array_CompensatedCorners[1][1]))     
             self.Lab_Measure_compensated_RU.setText(str(Array_CompensatedCorners[2][0])+","+str(Array_CompensatedCorners[2][1])) 
-            self.Lab_Measure_compensated_RL.setText(str(Array_CompensatedCorners[3][0])+","+str(Array_CompensatedCorners[3][1]))   
+            self.Lab_Measure_compensated_RL.setText(str(Array_CompensatedCorners[3][0])+","+str(Array_CompensatedCorners[3][1])) 
+            self.Display_Leftup.setText(str(Array_Corner_diff[0][0])+","+str(Array_Corner_diff[0][1]))
+            self.Display_LeftBottom.setText(str(Array_Corner_diff[1][0])+","+str(Array_Corner_diff[1][1]))
+            self.Display_RightUp.setText(str(Array_Corner_diff[2][0])+","+str(Array_Corner_diff[2][1]))
+            self.Display_RightBottom.setText(str(Array_Corner_diff[3][0])+","+str(Array_Corner_diff[3][1]))
+
 ############################################################################################################################################################
 class logging(QThread):
     global Log_Status
@@ -504,12 +523,16 @@ class jobthread(QThread):
         global Rotation_pt
         MeasureModeStatus = 0
         global Logging_Buffer
+        global Translation
+        global Angle_move
+        global Array_Corner_diff
+        global Array_RefrotationCorners
         if(Test_handle["MeasureGround"] is True):
             MeasureModeStatus = 1
             MC.ModifyCamConfig("ExposureTime",Test_handle["Expo_Start"])
             image = MC.GrabImg()
             imgpath = self.SaveMeasureModeImg(image,MeasureModeStatus)
-            self.jobthread_image_signal.emit(image,0)
+            self.jobthread_image_signal.emit(image,1)
             result = CLIENT.infer(imgpath, model_id="pcbholedetectionv3/4")
             result_unsorted_corner = LibAlgv2.filiter_Result(result)
             centroid,Array_GroundCorners = LibAlgv2.sort_points_anticlockwise(result_unsorted_corner)
@@ -518,34 +541,33 @@ class jobthread(QThread):
             Array_Center[0][0] =centroid[0]
             Array_Center[0][1] = centroid[1]
 
-            Motion_Buffer = "a10"
-            Angle_global = 10
-            Motion_Request.set()
-            Motion_Done_Signal.wait()
-            Motion_Done_Signal.clear()
-            Logging_Buffer = "Moving A to  = %s"%Angle_global
-            event.set()
 
-            MeasureModeStatus = 11 #For cal ref rotation pt
-            image = MC.GrabImg()
-            imgpath = self.SaveMeasureModeImg(image,MeasureModeStatus)
-            self.jobthread_image_signal.emit(image,0)
-            mgpath = self.SaveMeasureModeImg(image,MeasureModeStatus)
-            self.jobthread_image_signal.emit(image,1)
-            result = CLIENT.infer(imgpath, model_id="pcbholedetectionv3/4")
-            result_unsorted_corner = LibAlgv2.filiter_Result(result)
-            centroid,Array_RefrotationCorners = LibAlgv2.sort_points_anticlockwise(result_unsorted_corner)
-            print ("Calculate rotation point Coordinates:")
-            print(Array_RefrotationCorners)
-            Rotation_pt = LibAlgv2.find_rotation_center(Array_GroundCorners,Array_RefrotationCorners)
+            if (Test_handle['Check_RotationCenter'] is True):
+                MeasureModeStatus = 11 #For cal ref rotation pt
+                Motion_Buffer = "a10"
+                Angle_global = 10
+                Motion_Request.set()
+                Motion_Done_Signal.wait()
+                Motion_Done_Signal.clear()
+                Logging_Buffer = "Moving A to  = %s"%Angle_global
+                event.set()
+                image = MC.GrabImg()
+                imgpath = self.SaveMeasureModeImg(image,MeasureModeStatus)
+                self.jobthread_image_signal.emit(image,0)
+                result = CLIENT.infer(imgpath, model_id="pcbholedetectionv3/4")
+                result_unsorted_corner = LibAlgv2.filiter_Result(result)
+                centroid,Array_RefrotationCorners = LibAlgv2.sort_points_anticlockwise(result_unsorted_corner)
+                print ("Calculate rotation point Coordinates:")
+                print(Array_RefrotationCorners)
+                Rotation_pt = LibAlgv2.find_rotation_center(Array_GroundCorners,Array_RefrotationCorners)
 
-            Motion_Buffer = "a0"
-            Angle_global = 0
-            Motion_Request.set()
-            Motion_Done_Signal.wait()
-            Motion_Done_Signal.clear()
-            Logging_Buffer = "Moving A to  = %s"%Angle_global
-            event.set()
+                Motion_Buffer = "a0"
+                Angle_global = 0
+                Motion_Request.set()
+                Motion_Done_Signal.wait()
+                Motion_Done_Signal.clear()
+                Logging_Buffer = "Moving A to  = %s"%Angle_global
+                event.set()
             
         elif (Test_handle["MeasureMoved"] is True):
             MeasureModeStatus = 2
@@ -591,7 +613,8 @@ class jobthread(QThread):
             Translation,Angle_move  = LibAlgv2.compute_angle_and_shift(Array_GroundCorners,Array_MovedCorners,Rotation_pt[0],Rotation_pt[1])
             print("Angle compensated")
             print (Translation,Angle_move)
-            Angle_new = Angle_global - Angle_move #TODO determine the + or - the relative angle
+            self.update_measuremode_UItext_signal.emit(MeasureModeStatus)
+            Angle_new = Angle_global - Angle_move 
             Motion_Buffer = "a" + str(Angle_new)
             Angle_global = Angle_new
             Motion_Request.set()
@@ -600,20 +623,21 @@ class jobthread(QThread):
             Logging_Buffer = "Moving A to  = %s"%Angle_global
             event.set()
 
+
             MeasureModeStatus = 4
-            Motion_Buffer = "x" + str(Translation[0])
+            Motion_Buffer = "x" + str(-1*Translation[0])
             Motion_Request.set()
             Motion_Done_Signal.wait()
             Motion_Done_Signal.clear()
-            X_global = X_global + Translation[0]
+            X_global = X_global - Translation[0]
             Logging_Buffer = "Moving X to  = %s"%X_global
             event.set()
 
-            Motion_Buffer = "y" + str(-1*Translation[1])
+            Motion_Buffer = "y" + str(Translation[1])
             Motion_Request.set()
             Motion_Done_Signal.wait()
             Motion_Done_Signal.clear()
-            Y_global = Y_global - Translation[1]
+            Y_global = Y_global + Translation[1]
             Logging_Buffer = "Moving Y to  = %s"%Y_global
             event.set()
 
@@ -628,7 +652,15 @@ class jobthread(QThread):
             print(Array_CompensatedCorners)
             Array_Center[2][0] = centroid[0]
             Array_Center[2][1] = centroid[1]
-        
+
+            Array_Corner_diff[0][0] =  np.round(np.abs(Array_CompensatedCorners[0][0] - Array_GroundCorners[0][0])*100/917,2)
+            Array_Corner_diff[0][1] =  np.round(np.abs(Array_CompensatedCorners[0][1] - Array_GroundCorners[0][1])*100/917,2)
+            Array_Corner_diff[1][0] =  np.round(np.abs(Array_CompensatedCorners[1][0] - Array_GroundCorners[1][0])*100/917,2)
+            Array_Corner_diff[1][1] =  np.round(np.abs(Array_CompensatedCorners[1][1] - Array_GroundCorners[1][1])*100/917,2)       
+            Array_Corner_diff[2][0] =  np.round(np.abs(Array_CompensatedCorners[2][0] - Array_GroundCorners[2][0])*100/917,2)
+            Array_Corner_diff[2][1] =  np.round(np.abs(Array_CompensatedCorners[2][1] - Array_GroundCorners[2][1])*100/917,2)
+            Array_Corner_diff[3][0] =  np.round(np.abs(Array_CompensatedCorners[3][0] - Array_GroundCorners[3][0])*100/917,2)
+            Array_Corner_diff[3][1] =  np.round(np.abs(Array_CompensatedCorners[3][1] - Array_GroundCorners[3][1])*100/917,2)                      
         self.update_measuremode_UItext_signal.emit(MeasureModeStatus)
 
     def CollectMode(self, Test_handle):

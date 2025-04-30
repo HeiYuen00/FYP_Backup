@@ -79,8 +79,8 @@ def compute_angle_and_shift(original_rect, transformed_rect, h, k):
     # print h,k
     print ("rotation center:", h, k)
     
-    tx_opt = np.round(tx_opt*5/47,2)
-    ty_opt = np.round(ty_opt*5/47,2)
+    tx_opt = np.round(tx_opt*100/917,2)
+    ty_opt = np.round(ty_opt*100/917,2)
 
     theta_opt_deg = np.round(theta_opt_deg, 2)
     return [tx_opt, ty_opt],theta_opt_deg
@@ -194,7 +194,7 @@ def filiter_Result(API_Returnresult):
     positions_q = []
 
     for detection in API_Returnresult['predictions']:
-        if detection['confidence'] < 0.8:
+        if detection['confidence'] < 0.88:
             continue
         x_center = detection['x']
         y_center = detection['y']
